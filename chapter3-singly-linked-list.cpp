@@ -76,6 +76,9 @@ public:
 			}
 			ptr2 = ptr1->next;
 			ptr1->next = ptr2->next;
+			if (ptr2->next == nullptr) {
+				m_tail = ptr1;
+			}
 			delete ptr2;
 		}
 		--m_size;
@@ -103,6 +106,16 @@ public:
 		}
 		
 		return nullptr;
+	}
+	
+	~SinglyLinkedList() {
+		ListNode *ptr = m_head;
+		while (m_head != nullptr) {
+			m_head = m_head->next;
+			delete ptr;
+			ptr = m_head;
+		}
+		m_head = m_tail = nullptr;
 	}
 private:
 	int m_size;
