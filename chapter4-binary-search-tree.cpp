@@ -73,11 +73,14 @@ public:
 			return;
 		}
 		
-		if (val < par->val) {
-			delete par->left;
+		if (par == nullptr) {
+			delete cur;
+			m_root = nullptr;
+		} else if (cur == par->left) {
+			delete cur;
 			par->left = nullptr;
 		} else {
-			delete par->right;
+			delete cur;
 			par->right = nullptr;
 		}
 	}
@@ -271,6 +274,12 @@ int main()
 	bst.deleteNode(14);
 	cout << bst.preorderTraversal() << endl;
 	bst.deleteNode(5);
+	cout << bst.preorderTraversal() << endl;
+	
+	bst.clear();
+	bst.insertNode(1);
+	cout << bst.preorderTraversal() << endl;
+	bst.deleteNode(1);
 	cout << bst.preorderTraversal() << endl;
 	
 	return 0;
