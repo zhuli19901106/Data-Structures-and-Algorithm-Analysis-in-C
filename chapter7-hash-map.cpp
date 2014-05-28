@@ -1,4 +1,4 @@
-// 8.10 Design a hash table. Handle conflicts with chaining(linked lists).
+// My implementation for hash map.
 #include <iostream>
 #include <string>
 #include <vector>
