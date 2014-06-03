@@ -4,11 +4,48 @@
 #include <vector>
 using namespace std;
 
+void topologicalSort(const vector<vector<bool> > &graph, vector<int> &order)
+{
+	int n;
+	int i, j;
+	vector<int> indegree;
+	queue<int> q;
+	
+	n = (int)graph.size();
+	indegree.resize(n, 0);
+	
+	for (i = 0; i < n; ++i) {
+		for (j = 0; j < n; ++j) {
+			if (graph[i][j]) {
+				++indegree[j];
+			}
+		}
+	}
+	
+	for (i = 0; i < n; ++i) {
+		if (indegree[i] == 0) {
+			q.push(i);
+			break;
+		}
+	}
+	
+	while (!q.empty()) {
+		i = q.front();
+		q.pop();
+		order.push_back(i);
+		for (j = 0; j < n; ++j) {
+			if (graph[i][j] && (--indegree[j] == 0)) {
+				q.push(j);
+			}
+		}
+	}
+	
+	indegree.clear();
+}
+
 int main()
 {
 	vector<vector<bool> > graph;
-	queue<int> q;
-	vector<int> indegree;
 	vector<int> order;
 	int n;
 	int nk;
@@ -21,34 +58,15 @@ int main()
 			graph[i].resize(n, false);
 		}
 		
-		indegree.resize(n, 0);
-		
 		for (i = 0; i < n; ++i) {
 			cin >> nk;
 			for (j = 0; j < nk; ++j) {
 				cin >> tmp;
 				graph[i][tmp] = true;
-				++indegree[tmp];
 			}
 		}
 		
-		for (i = 0; i < n; ++i) {
-			if (indegree[i] == 0) {
-				q.push(i);
-				break;
-			}
-		}
-		
-		while (!q.empty()) {
-			tmp = q.front();
-			q.pop();
-			order.push_back(tmp);
-			for (i = 0; i < n; ++i) {
-				if (graph[tmp][i] && (--indegree[i] == 0)) {
-					q.push(i);
-				}
-			}
-		}
+		topologicalSort(graph, order);
 		
 		if ((int)order.size() == n) {
 			for (i = 0; i < n; ++i) {
@@ -63,7 +81,6 @@ int main()
 			graph[i].clear();
 		}
 		graph.clear();
-		indegree.clear();
 		order.clear();
 	}
 	
