@@ -1,5 +1,4 @@
 // My first practice on maximum flow problem. This is an implementation using Edmonds-Karp Algorithm.
-// A simple illustration for weighted shortest path. Graph represented by adjacency matrix.
 #include <algorithm>
 #include <iostream>
 #include <queue>
