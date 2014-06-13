@@ -1,4 +1,5 @@
-// My first attempt on Minimax , using tic-tac-toe game as a sample.
+// Optimization for Minimax game strategy, using Alpha-Beta Pruning.
+// You can watch over the 'function_call_count' variable.
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -90,9 +91,10 @@ bool fullBoard(const vector<int> &board)
 	return true;
 }
 
-void findComputerMove(vector<int> &board, int &best_move, int &result)
+void findComputerMove(vector<int> &board, int &best_move, int &result, 
+	int alpha, int beta)
 {
-	void findHumanMove(vector<int> &, int &, int &);
+	void findHumanMove(vector<int> &, int &, int &, int, int);
 	int dc, i, response;
 	
 	++function_call_count;
@@ -108,12 +110,13 @@ void findComputerMove(vector<int> &board, int &best_move, int &result)
 		return;
 	}
 	
-	for (i = 0; i < 9; ++i) {
+	result = alpha;
+	for (i = 0; i < 9 && result > beta; ++i) {
 		if (board[i] != 0) {
 			continue;
 		}
 		board[i] = -1;
-		findHumanMove(board, dc, response);
+		findHumanMove(board, dc, response, result, beta);
 		board[i] = 0;
 		
 		if (best_move == -1 || response < result) {
@@ -123,9 +126,10 @@ void findComputerMove(vector<int> &board, int &best_move, int &result)
 	}
 }
 
-void findHumanMove(vector<int> &board, int &best_move, int &result)
+void findHumanMove(vector<int> &board, int &best_move, int &result, int alpha, 
+	int beta)
 {
-	void findComputerMove(vector<int> &, int &, int &);
+	void findComputerMove(vector<int> &, int &, int &, int, int);
 	int dc, i, response;
 	
 	++function_call_count;
@@ -141,12 +145,13 @@ void findHumanMove(vector<int> &board, int &best_move, int &result)
 		return;
 	}
 	
-	for (i = 0; i < 9; ++i) {
+	result = beta;
+	for (i = 0; i < 9 && result < alpha; ++i) {
 		if (board[i] != 0) {
 			continue;
 		}
 		board[i] = 1;
-		findComputerMove(board, dc, response);
+		findComputerMove(board, dc, response, alpha, result);
 		board[i] = 0;
 		
 		if (best_move == -1 || response > result) {
@@ -208,7 +213,7 @@ int main()
 		
 		result = 1;
 		function_call_count = 0;
-		findComputerMove(board, n, result);
+		findComputerMove(board, n, result, 1, -1);
 		cout << "Number of function calls: " << function_call_count << endl;
 		board[n] = -1;
 		printBoard(board);
