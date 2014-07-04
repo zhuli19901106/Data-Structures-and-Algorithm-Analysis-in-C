@@ -383,7 +383,7 @@ private:
 	}
 	
 	void _singleRotationRight(TreeNode *cur) {
-		// Subtree A is deeper than subtree B.
+		// Subtree C is deeper than subtree B.
 		// Before rotation:
 		//   X
 		//  / \

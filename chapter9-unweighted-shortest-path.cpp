@@ -7,7 +7,7 @@ using namespace std;
 void unweightedShortestPath(const vector<vector<bool> > &graph, 
 	vector<int> &dist, vector<bool> &reachable)
 {
-	// The minimal distances from 0th vertice to others.
+	// The minimal distances from 0th vertex to others.
 	int n;
 	int i, j;
 	
